@@ -1,6 +1,9 @@
-#container {
-    /*bla bla*/
+#container {    
     display:flex;
+    width: 600px;
+    height:600px;
+    border: 1px solid red;
+    overflow: hidden;
 }
 
 .cell {
