@@ -1,11 +1,24 @@
 const color = "black"
-//default for now is black color
 
 const setSize = document.getElementById("setsize");
 setSize.addEventListener("click", genDiv);
 
+
 const maxWidth = 600;
 const board = document.getElementById('container');
+
+const clearb = document.getElementById('clearb');
+const rainbowb = document.getElementById('rainbowb');
+
+let ifRainbow = false;
+rainbowb.addEventListener('input', (e) => {
+    ifRainbow = e.target.checked;
+    genDiv();
+});
+
+clearb.addEventListener('click', (e) => {
+    genDiv();
+});
 
 function genDiv(){
     var n = document.getElementById("size").value;
@@ -23,12 +36,20 @@ function genDiv(){
         for(var j = 0;j<n; j++){
             var cell = document.createElement("div");
             cell.className = "cell";
-            cell.addEventListener("mouseover", paint);
+            
+            if(ifRainbow){
+                cell.addEventListener("mouseover", paintRainbow);
+            }
+            else {
+                cell.addEventListener("mouseover", paint);
+            }
+
+
             row.appendChild(cell);            
         }        
         board.appendChild(row);
 
-        var cells = document.getElementsByClassName("cell");
+        var cells = document.getElementsByClassName("cell"); //sets grid to fit
         for(let k = 0; k < cells.length; k++){
             cells[k].style.width = maxWidth / n -2 + "px";
             cells[k].style.height = maxWidth / n + "px";
@@ -40,6 +61,8 @@ function paint(){
     this.style.backgroundColor = color;
 }
 
-//idk how i forgot that you can recall the event's object by 'this'. I feel stupid..
+function paintRainbow(){
+    this.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+}
 
 genDiv();
